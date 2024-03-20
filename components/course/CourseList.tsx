@@ -31,9 +31,8 @@ const elements = [
 
 const CourseList = (props: Props) => {
   const { data: courses } = useCourses();
-  console.log(courses);
 
-  const rows = elements.map((element) => (
+  const rows = courses?courses.map((element:any) => (
     <Table.Tr key={element.course_code}>
       <Table.Td>{element.course_code}</Table.Td>
       <Table.Td>{element.course_name}</Table.Td>
@@ -41,7 +40,7 @@ const CourseList = (props: Props) => {
       <Table.Td>{element.department}</Table.Td>
       <Table.Td>{element.semester}</Table.Td>
     </Table.Tr>
-  ));
+  )):null
 
   return (
     <Table>

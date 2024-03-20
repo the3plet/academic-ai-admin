@@ -5,6 +5,7 @@ import axios from "axios";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import useToast from "../hooks/useToast";
+import { useAddCourse } from "@/lib/query-hooks/course";
 
 type Props = {};
 
@@ -17,18 +18,14 @@ const AddCourse = (props: Props) => {
   const [opened, { open, close }] = useDisclosure(false);
   const { Toast, showToast } = useToast();
   const form = useForm<any>({ defaultValues });
+  const {mutate:addCourse} = useAddCourse()
 
   const onSubmit = (data: any) => {
-    showToast("Course saved", "success");
-
-    axios
-      .post("http://127.0.0.1:8000/courses/courses", data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // showToast("Course saved", "success");
+    const submitValues = {...data,topics:[],no_of_modules:Number(data.no_of_modules),semester:Number(data.semester),hours:Number(data.hours),credits:Number(data.credits)}
+    console.log(submitValues);
+    
+addCourse(data)
   };
 
   return (
@@ -92,7 +89,7 @@ const AddCourse = (props: Props) => {
               )}
             />
             <Controller
-              name="dept"
+              name="department"
               control={form.control}
               render={({ field }) => (
                 <TextInput
