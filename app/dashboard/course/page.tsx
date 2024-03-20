@@ -17,7 +17,7 @@ const Courses = (props: Props) => {
   return (
     <div>
       <Title order={2}>Courses</Title>
-      <Group justify="space-between">
+      <Group justify="space-between" my="sm">
         <TextInput placeholder="Search courses" />
 
         <AddCourse />

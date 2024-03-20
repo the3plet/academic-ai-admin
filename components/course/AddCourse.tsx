@@ -18,7 +18,7 @@ const AddCourse = (props: Props) => {
   const { Toast, showToast } = useToast();
   const form = useForm<any>({ defaultValues });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     showToast("Course saved", "success");
 
     axios
