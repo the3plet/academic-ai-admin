@@ -1,41 +1,67 @@
-"use client";
-import { Button, Drawer, Stack, TextInput } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import axios from "axios";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import useToast from "../hooks/useToast";
-import { useAddCourse } from "@/lib/query-hooks/course";
+"use client"
+import { Button, Drawer, Stack, TagsInput, TextInput } from "@mantine/core"
+import { useDisclosure } from "@mantine/hooks"
+import axios from "axios"
+import React from "react"
+import { Controller, useForm } from "react-hook-form"
+import useToast from "../hooks/useToast"
+import { useAddCourse } from "@/lib/query-hooks/course"
 
-type Props = {};
+type Props = {}
 
 const defaultValues = {
   scheme: "2019",
   no_of_modules: "5",
-};
+}
 
 const AddCourse = (props: Props) => {
-  const [opened, { open, close }] = useDisclosure(false);
-  const { Toast, showToast } = useToast();
-  const form = useForm<any>({ defaultValues });
-  const {mutate:addCourse} = useAddCourse()
+  const [opened, { open, close }] = useDisclosure(false)
+  const { Toast, showToast } = useToast()
+  const form = useForm<any>({ defaultValues })
+  const { mutate: addCourse } = useAddCourse()
 
   const onSubmit = (data: any) => {
     // showToast("Course saved", "success");
-    const submitValues = {...data,topics:[],no_of_modules:Number(data.no_of_modules),semester:Number(data.semester),hours:Number(data.hours),credits:Number(data.credits)}
-    console.log(submitValues);
-    
-addCourse(data)
-  };
+    const submitValues = {
+      ...data,
+      topics: [],
+      no_of_modules: Number(data.no_of_modules),
+      semester: Number(data.semester),
+      hours: Number(data.hours),
+      credits: Number(data.credits),
+    }
+    console.log(submitValues)
+
+    addCourse(data)
+  }
+
+  const getTopicFields = () => {
+    try {
+      if (Number(form.watch("no_of_modules"))) {
+        return [...Array(Number(form.watch("no_of_modules")))].map((field, index) => (
+          <Controller
+            name="course_code"
+            control={form.control}
+            render={({ field }) => (
+              <TagsInput
+                component="textarea"
+                {...field}
+                label={`Module ${index + 1}`}
+                description="Enter syllabus topics in this module; either by seperated by comma(,) or by using enter key after each topic"
+                placeholder="Enter syllabus topics"
+              />
+            )}
+          />
+        ))
+      }
+    } catch (e) {
+      return null
+    }
+  }
 
   return (
     <>
-      <Drawer
-        opened={opened}
-        onClose={close}
-        title="Add Course"
-        position="right"
-      >
+      <Drawer opened={opened} onClose={close} title="Add Course" position="right">
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Stack gap="sm">
             <Controller
@@ -137,6 +163,8 @@ addCourse(data)
                 />
               )}
             />
+
+            {getTopicFields()}
             <Button type="submit">Save</Button>
           </Stack>
         </form>
@@ -146,7 +174,7 @@ addCourse(data)
 
       {Toast && <Toast />}
     </>
-  );
-};
+  )
+}
 
-export default AddCourse;
+export default AddCourse
