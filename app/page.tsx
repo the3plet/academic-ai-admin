@@ -1,12 +1,7 @@
-import { useCourses } from "@/lib/query-hooks/course";
-import { Button, NavLink } from "@mantine/core";
-import Image from "next/image";
+import { Button } from "@mantine/core";
 import Link from "next/link";
-import '@mantine/dates/styles.css';
 
 export default function Home() {
-
-
   return (
     <main className="p-24">
       <Button>

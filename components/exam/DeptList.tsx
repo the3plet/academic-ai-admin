@@ -9,7 +9,7 @@ const DeptList = (props: Props) => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
-      <Grid align="center" justify="center" my="sm">
+      <Grid align="center" my="sm">
         <Grid.Col span={3}>
           <Card
             padding="xl"
@@ -95,7 +95,7 @@ const DeptList = (props: Props) => {
         title="Exam Date Updation"
         position="right"
       >
-       <AddExam/>
+        <AddExam />
       </Drawer>
     </>
   );

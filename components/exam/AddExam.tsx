@@ -1,6 +1,8 @@
 import { Button, NativeSelect, Stack } from "@mantine/core";
 import { DatePickerInput } from '@mantine/dates';
 import React, { useState } from "react";
+import "@mantine/dates/styles.css";
+
 
 type Props = {};
 
