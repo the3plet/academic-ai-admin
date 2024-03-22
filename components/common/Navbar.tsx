@@ -56,7 +56,7 @@ const Navbar = (props: Props) => {
           color="red"
           fullWidth
         >
-          Log out
+          <Link href="/">Log out</Link> 
         </Button>
       </AppShell.Section>
     </AppShell.Navbar>
