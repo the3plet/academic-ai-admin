@@ -1,4 +1,8 @@
-import { Flex, TextInput, Title } from "@mantine/core";
+
+import AddExam from "@/components/exams/AddExam";
+import ExamList from "@/components/exams/ExamList";
+import { Flex, Group, TextInput, Title } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import React from "react";
 
 type Props = {};
@@ -6,9 +10,16 @@ type Props = {};
 const Exams = (props: Props) => {
   return (
     <div>
-      <Title order={2}>Exams/Assessments</Title>
+      <Notifications/>
+    <Title order={2}>Exams/Assessments</Title>
+    <Group justify="space-between" my="sm">
+      <TextInput placeholder="Search Exams" />
 
-    </div>
+     <AddExam/>
+    </Group>
+
+   <ExamList/>
+  </div>
   );
 };
 

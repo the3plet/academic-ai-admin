@@ -15,3 +15,24 @@ export type TStat = {
   outOf?: number;
   isAverage?: boolean;
 };
+
+export type TExam = {
+  id: number;
+  department_name: string;
+  semester: string;
+  series_one_date: string;
+  series_two_date: string;
+  end_semester_date: string;
+  assignment_1_date: string;
+  assignement_2_date: string;
+}[];
+
+export type AExam = {
+  department_name: string;
+  semester: string;
+  series_one_date: string;
+  series_two_date: string;
+  end_semester_date: string;
+  assignment_1_date: string;
+  assignement_2_date: string;
+};
