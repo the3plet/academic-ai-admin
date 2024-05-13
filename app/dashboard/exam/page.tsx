@@ -1,4 +1,3 @@
-
 import AddExam from "@/components/exams/AddExam";
 import ExamList from "@/components/exams/ExamList";
 import { Flex, Group, TextInput, Title } from "@mantine/core";
