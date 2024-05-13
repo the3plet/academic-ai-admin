@@ -1,5 +1,12 @@
 "use client";
-import { Button, Drawer, Stack, TagsInput, TextInput } from "@mantine/core";
+import {
+  Button,
+  Drawer,
+  MultiSelect,
+  Stack,
+  TagsInput,
+  TextInput,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import React from "react";
@@ -26,15 +33,20 @@ const AddCourse = (props: Props) => {
     // showToast("Course saved", "success");
     const submitValues = {
       ...data,
-      topics: [],
       no_of_modules: 5,
       semester: Number(data.semester),
       hours: Number(data.hours),
       credits: Number(data.credits),
+      topics: [...new Array(5)].map((_, index) => ({
+        module: index + 1,
+        topic: data?.[`module_${index}`],
+        focus_area: data?.[`focus_${index}`],
+      })),
     };
     console.log(submitValues);
+    // console.log(data);
 
-    addCourse(data);
+    addCourse(submitValues);
   };
 
   return (
@@ -148,20 +160,37 @@ const AddCourse = (props: Props) => {
             />
 
             {topicFields.map((_, index) => (
-              <Controller
-                key={`topics-field-${index}`}
-                name={`module-${index}-topic`}
-                control={form.control}
-                render={({ field }) => (
-                  <TagsInput
-                    component="textarea"
-                    {...field}
-                    label={`Module ${index + 1}`}
-                    description="Enter syllabus topics in this module; either by seperated by comma(,) or by using enter key after each topic"
-                    placeholder="Enter syllabus topics"
-                  />
-                )}
-              />
+              <>
+                <Controller
+                  key={`topics-field-${index}`}
+                  name={`module_${index}`}
+                  control={form.control}
+                  render={({ field }) => (
+                    <TagsInput
+                      component="textarea"
+                      {...field}
+                      label={`Module ${index + 1}`}
+                      description="Enter syllabus topics in this module; either by seperated by comma(,) or by using enter key after each topic"
+                      placeholder="Enter syllabus topics"
+                    />
+                  )}
+                />
+                <Controller
+                  key={`focus-field-${index}`}
+                  name={`focus_${index}`}
+                  control={form.control}
+                  render={({ field }) => (
+                    <MultiSelect
+                      component="textarea"
+                      {...field}
+                      label="Important topics"
+                      description="Enter important topics from above pool of topics"
+                      placeholder="Enter important topics"
+                      data={form.watch(`module_${index}`)}
+                    />
+                  )}
+                />
+              </>
             ))}
 
             <Button type="submit">Save</Button>
