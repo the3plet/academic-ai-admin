@@ -28,6 +28,11 @@ const routes = [
     path: "/dashboard/exam",
     icon: <BookOpenCheck size={20} />,
   },
+  {
+    label: "Analytics",
+    path: "/dashboard/analytics",
+    icon: <BookOpenCheck size={20} />,
+  },
 ];
 
 const Navbar = (props: Props) => {

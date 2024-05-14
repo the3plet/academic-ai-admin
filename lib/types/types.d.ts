@@ -36,3 +36,10 @@ export type AExam = {
   assignment_1_date: string;
   assignement_2_date: string;
 };
+
+export type TStudent = {
+  name: string;
+  admission_no: string;
+  topic_completed: number;
+  no_of_skipped_topics: number;
+}[];
