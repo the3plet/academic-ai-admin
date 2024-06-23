@@ -1,67 +1,62 @@
-"use client"
-import { Button, Drawer, Stack, TagsInput, TextInput } from "@mantine/core"
-import { useDisclosure } from "@mantine/hooks"
-import axios from "axios"
-import React from "react"
-import { Controller, useForm } from "react-hook-form"
-import useToast from "../hooks/useToast"
-import { useAddCourse } from "@/lib/query-hooks/course"
+"use client";
+import {
+  Button,
+  Drawer,
+  MultiSelect,
+  Stack,
+  TagsInput,
+  TextInput,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import axios from "axios";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import useToast from "../hooks/useToast";
+import { useAddCourse } from "@/lib/query-hooks/course";
 
-type Props = {}
+type Props = {};
 
 const defaultValues = {
   scheme: "2019",
   no_of_modules: "5",
-}
+};
+
+const topicFields = [1, 2, 3, 4, 5];
 
 const AddCourse = (props: Props) => {
-  const [opened, { open, close }] = useDisclosure(false)
-  const { Toast, showToast } = useToast()
-  const form = useForm<any>({ defaultValues })
-  const { mutate: addCourse } = useAddCourse()
+  const [opened, { open, close }] = useDisclosure(false);
+  const { Toast, showToast } = useToast();
+  const form = useForm<any>({ defaultValues });
+  const { mutate: addCourse } = useAddCourse();
 
   const onSubmit = (data: any) => {
     // showToast("Course saved", "success");
     const submitValues = {
       ...data,
-      topics: [],
-      no_of_modules: Number(data.no_of_modules),
+      no_of_modules: 5,
       semester: Number(data.semester),
       hours: Number(data.hours),
       credits: Number(data.credits),
-    }
-    console.log(submitValues)
+      topics: [...new Array(5)].map((_, index) => ({
+        module: index + 1,
+        topic: data?.[`module_${index}`],
+        focus_area: data?.[`focus_${index}`],
+      })),
+    };
+    console.log(submitValues);
+    // console.log(data);
 
-    addCourse(data)
-  }
-
-  const getTopicFields = () => {
-    try {
-      if (Number(form.watch("no_of_modules"))) {
-        return [...Array(Number(form.watch("no_of_modules")))].map((field, index) => (
-          <Controller
-            name="course_code"
-            control={form.control}
-            render={({ field }) => (
-              <TagsInput
-                component="textarea"
-                {...field}
-                label={`Module ${index + 1}`}
-                description="Enter syllabus topics in this module; either by seperated by comma(,) or by using enter key after each topic"
-                placeholder="Enter syllabus topics"
-              />
-            )}
-          />
-        ))
-      }
-    } catch (e) {
-      return null
-    }
-  }
+    addCourse(submitValues);
+  };
 
   return (
     <>
-      <Drawer opened={opened} onClose={close} title="Add Course" position="right">
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title="Add Course"
+        position="right"
+      >
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Stack gap="sm">
             <Controller
@@ -164,7 +159,40 @@ const AddCourse = (props: Props) => {
               )}
             />
 
-            {getTopicFields()}
+            {topicFields.map((_, index) => (
+              <>
+                <Controller
+                  key={`topics-field-${index}`}
+                  name={`module_${index}`}
+                  control={form.control}
+                  render={({ field }) => (
+                    <TagsInput
+                      component="textarea"
+                      {...field}
+                      label={`Module ${index + 1}`}
+                      description="Enter syllabus topics in this module; either by seperated by comma(,) or by using enter key after each topic"
+                      placeholder="Enter syllabus topics"
+                    />
+                  )}
+                />
+                <Controller
+                  key={`focus-field-${index}`}
+                  name={`focus_${index}`}
+                  control={form.control}
+                  render={({ field }) => (
+                    <MultiSelect
+                      component="textarea"
+                      {...field}
+                      label="Important topics"
+                      description="Enter important topics from above pool of topics"
+                      placeholder="Enter important topics"
+                      data={form.watch(`module_${index}`)}
+                    />
+                  )}
+                />
+              </>
+            ))}
+
             <Button type="submit">Save</Button>
           </Stack>
         </form>
@@ -174,7 +202,7 @@ const AddCourse = (props: Props) => {
 
       {Toast && <Toast />}
     </>
-  )
-}
+  );
+};
 
-export default AddCourse
+export default AddCourse;

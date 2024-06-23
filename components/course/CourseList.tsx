@@ -33,9 +33,9 @@ const CourseList = (props: Props) => {
   const { data: courses } = useCourses();
 
   const rows = courses?courses.map((element:any) => (
-    <Table.Tr key={element.course_code}>
-      <Table.Td>{element.course_code}</Table.Td>
-      <Table.Td>{element.course_name}</Table.Td>
+    <Table.Tr key={element.subject_code}>
+      <Table.Td>{element.subject_code}</Table.Td>
+      <Table.Td>{element.subject_name}</Table.Td>
       <Table.Td>{element.scheme}</Table.Td>
       <Table.Td>{element.department}</Table.Td>
       <Table.Td>{element.semester}</Table.Td>

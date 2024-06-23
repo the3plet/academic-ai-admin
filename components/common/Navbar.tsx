@@ -28,6 +28,11 @@ const routes = [
     path: "/dashboard/exam",
     icon: <BookOpenCheck size={20} />,
   },
+  {
+    label: "Analytics",
+    path: "/dashboard/analytics",
+    icon: <BookOpenCheck size={20} />,
+  },
 ];
 
 const Navbar = (props: Props) => {
@@ -56,7 +61,7 @@ const Navbar = (props: Props) => {
           color="red"
           fullWidth
         >
-          Log out
+          <Link href="/">Log out</Link> 
         </Button>
       </AppShell.Section>
     </AppShell.Navbar>
